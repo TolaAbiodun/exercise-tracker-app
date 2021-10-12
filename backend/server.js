@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 // environment variables
 require('dotenv').config();
@@ -13,20 +14,15 @@ app.use(cors());
 app.use(express.json());
 
 // create database connection
-
-const { MongoClient } = require('mongodb');
 const uri = process.env.ATLAS_URI
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-client.connect(err => {
-    const collection = client.db("test").collection("devices");
-    // perform actions on the collection object
-    client.close();
-  });
-
-client.once('open', () => {
-    console.log("MongoDB database connection established!")
-})
+mongoose 
+ .connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        })   
+ .then(() => console.log("Database connected!"))
+ .catch(err => console.log('Error:' +  err));
 
 // Add API end points from routes
 const exersRouter = require('./routes/exercises');

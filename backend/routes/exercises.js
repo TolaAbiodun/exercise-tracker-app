@@ -1,6 +1,5 @@
 // Import express router and require user model
 const router = require('express').Router();
-const { response } = require('express');
 let Exercise = require('../models/exercise_model');
 
 // First End point for HTTP get requests
